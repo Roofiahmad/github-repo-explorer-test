@@ -1,7 +1,7 @@
 import Home from "./modules/Home";
 
 export const metadata = {
-  title: "App Router",
+  title: "Github Repo Finder",
 };
 
 export default function Page() {

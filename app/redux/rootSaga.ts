@@ -1,7 +1,12 @@
 import { call, put, takeLatest } from "@redux-saga/core/effects";
 import { globalSlice } from "app/redux/globalSlice";
-import axios, { AxiosResponse } from "axios";
-import { fetchUsersParams, ReposResponse, UserReponse } from "./types";
+import axios, { AxiosError, AxiosResponse } from "axios";
+import {
+  ErrorFetchUser,
+  fetchUsersParams,
+  ReposResponse,
+  UserReponse,
+} from "./types";
 
 export function* fetchUsers({ payload }: fetchUsersParams) {
   yield put(globalSlice.actions.setLoading(true));
@@ -11,10 +16,15 @@ export function* fetchUsers({ payload }: fetchUsersParams) {
       `https://api.github.com/search/users?per_page=10&q=${payload}&page=1`
     );
     if (response.status == 200) {
-      yield put(globalSlice.actions.setUsers(response.data.items));
+      yield put(
+        globalSlice.actions.setUsers({
+          items: response.data.items,
+          totalCount: response.data.total_count,
+        })
+      );
     }
-  } catch (error) {
-    console.log(error);
+  } catch (e) {
+    console.log(e);
   }
   yield put(globalSlice.actions.setLoading(false));
 }
@@ -24,12 +34,29 @@ export function* fetchRepos({ payload }: fetchUsersParams) {
   try {
     const response: AxiosResponse<ReposResponse> = yield call(
       axios.get,
-      `https://api.github.com/search/repositories?per_page=50&q=user:${payload}&page=1`
+      `https://api.github.com/search/repositories?per_page=10&q=user:${payload}&page=1`
     );
     if (response.status == 200) {
-      yield put(globalSlice.actions.setRepos(response.data.items));
+      yield put(
+        globalSlice.actions.setRepos({
+          items: response.data.items,
+          totalCount: response.data.total_count,
+        })
+      );
     }
-  } catch (error) {
+  } catch (e) {
+    const error = e as AxiosError<ErrorFetchUser>;
+    const errorMessage = error.response?.data.errors
+      .map((e) => e.message)
+      .join(", ");
+    console.log(errorMessage);
+    yield put(
+      globalSlice.actions.setErrorMessage({
+        errorMessage: errorMessage || "",
+        isError: true,
+        errorCode: error.status || null,
+      })
+    );
     console.log(error);
   }
   yield put(globalSlice.actions.setLoading(false));

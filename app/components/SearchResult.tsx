@@ -3,7 +3,7 @@ import AccordionCard from "./AccordionCard";
 import styled from "styled-components";
 import { User } from "app/redux/types";
 
-const SearchContainer = styled.div`
+const SearchResultContainer = styled.div`
   width: 100%;
 `;
 
@@ -11,12 +11,14 @@ type Props = {
   items?: User[];
 };
 
-export default function SearchResult(props: Props) {
+export default function SearchResult({ items }: Props) {
+  console.log(items, "items");
+
   return (
-    <SearchContainer>
-      {props.items?.map((i) => (
+    <SearchResultContainer>
+      {items?.map((i) => (
         <AccordionCard item={i} key={i.id} />
       ))}
-    </SearchContainer>
+    </SearchResultContainer>
   );
 }

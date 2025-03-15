@@ -139,3 +139,16 @@ export type ReposResponse = {
   items: Repository[];
   total_count: number;
 };
+
+type error = {
+  message: string;
+  resource: string;
+  field: string;
+  code: string;
+};
+export type ErrorFetchUser = {
+  message: string;
+  errors: error[];
+  documentation_url: string;
+  status: string;
+};
