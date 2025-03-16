@@ -56,7 +56,7 @@ export function* fetchRepos({ payload }: fetchUsersParams) {
         errorCode: error.status || null,
       })
     );
-    console.log(error);
+    // console.log(error);
   }
   yield put(globalSlice.actions.setLoading(false));
 }

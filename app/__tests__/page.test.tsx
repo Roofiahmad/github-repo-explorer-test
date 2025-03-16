@@ -2,14 +2,14 @@ import { screen, within } from "@testing-library/react";
 import { render } from "app/test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
 import { rest } from "msw";
-import { server } from "./mocks/server";
+import { server } from "../mocks/server";
 import {
   errorRepoSearch,
   repoSearchResponse,
   searcUserResponse,
-} from "./mocks/response";
-import Page from "./page";
-import AlertDialog from "./components/AlertDialog";
+} from "../mocks/response";
+import Page from "../page";
+import AlertDialog from "../components/AlertDialog";
 
 it("initial render page component, must have input and button element", () => {
   render(<Page />);
