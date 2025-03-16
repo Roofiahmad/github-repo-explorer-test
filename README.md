@@ -4,13 +4,13 @@ This project searches GitHub usernames and explores their respective repositorie
 
 # Tech stack
 
-Typescript
-ReactJS (NextJS)
-Jest
-Material UI
-Redux-Saga
-Docker
-Styled Components
+- Typescript
+- ReactJS (NextJS)
+- Jest
+- Material UI
+- Redux-Saga
+- Docker
+- Styled Components
 
 ## Install project
 
