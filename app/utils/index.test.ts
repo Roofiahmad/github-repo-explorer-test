@@ -1,5 +1,7 @@
-import { add } from ".";
+import { countFormatter } from ".";
 
-test("Test functions that import server-only", () => {
-  expect(add(1, 2)).toBe(3);
+test("test counterFormatter function", () => {
+  expect(countFormatter(12001)).toBe("12.0K");
+  expect(countFormatter(12341000)).toBe("12.3M");
+  expect(countFormatter(89)).toBe("89");
 });

@@ -49,7 +49,6 @@ export function* fetchRepos({ payload }: fetchUsersParams) {
     const errorMessage = error.response?.data.errors
       .map((e) => e.message)
       .join(", ");
-    console.log(errorMessage);
     yield put(
       globalSlice.actions.setErrorMessage({
         errorMessage: errorMessage || "",

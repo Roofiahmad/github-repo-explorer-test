@@ -12,8 +12,6 @@ type Props = {
 };
 
 export default function SearchResult({ items }: Props) {
-  console.log(items, "items");
-
   return (
     <SearchResultContainer>
       {items?.map((i) => (

@@ -27,18 +27,15 @@ const AccordionCard = (props: AccordionCardProps) => {
 
   return (
     <StyledAccordion
+      data-testid="accordion-component"
       onChange={(e, expanded) => expanded && dispatch(onGetRepos(item.login))}
     >
-      <AccordionSummary
-        expandIcon={<ExpandMoreIcon />}
-        aria-controls="panel1-content"
-        id="panel1-header"
-      >
+      <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography component="span">{item.login}</Typography>
       </AccordionSummary>
       <AccordionDetails>
         {repos.map((i) => (
-          <RepoItemContainer key={i.id}>
+          <RepoItemContainer key={i.id} data-testid="accordion-item">
             <RepoDesc>
               <Typography variant="h6" fontWeight={600}>
                 {i.full_name.replace(`${item.login}/`, "")}

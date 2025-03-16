@@ -24,7 +24,6 @@ const InputStyled = ({
   placeholder,
   ...restProps
 }: InputStyledProps) => {
-  console.log(error, "error");
   return (
     <>
       <Input
