@@ -1,13 +1,15 @@
-/**
- * @jest-environment jsdom
- */
-import { logDOM, screen } from "@testing-library/react";
-import Page from "./page";
+import { screen, within } from "@testing-library/react";
 import { render } from "app/test-utils/testing-library-utils";
 import userEvent from "@testing-library/user-event";
+import { rest } from "msw";
 import { server } from "./mocks/server";
-import { http, HttpResponse } from "msw";
-import { errorRepoSearch } from "./mocks/response";
+import {
+  errorRepoSearch,
+  repoSearchResponse,
+  searcUserResponse,
+} from "./mocks/response";
+import Page from "./page";
+import AlertDialog from "./components/AlertDialog";
 
 it("initial render page component, must have input and button element", () => {
   render(<Page />);
@@ -42,7 +44,7 @@ it("show search result on username search", async () => {
   userEvn.click(buttonEl);
 
   const accordionItem = await screen.findAllByTestId("accordion-component");
-  expect(accordionItem).toHaveLength(10);
+  expect(accordionItem).toHaveLength(searcUserResponse.items.length);
 });
 
 it("show project list on expand user accordion", async () => {
@@ -58,27 +60,33 @@ it("show project list on expand user accordion", async () => {
   const accordionExpandIcon = await screen.findAllByTestId("ExpandMoreIcon");
   await userEvent.click(accordionExpandIcon[0]);
   const accordionItem = await screen.findAllByTestId("accordion-item");
-  expect(accordionItem).toHaveLength(10);
+  expect(accordionItem).toHaveLength(repoSearchResponse.items.length);
 });
 
-// it("show error popup on click private username", async () => {
-//   server.resetHandlers(
-//     http.post("https://api.github.com/search/repositories", () => {
-//       return new HttpResponse(JSON.stringify(errorRepoSearch), {
-//         status: 422,
-//       });
-//     })
-//   );
+it("show error popup on click private username", async () => {
+  server.resetHandlers(
+    rest.get("https://api.github.com/search/repositories", (_req, res, ctx) => {
+      return res(ctx.status(422), ctx.json(errorRepoSearch));
+    })
+  );
 
-//   const userEvn = userEvent.setup();
-//   render(<Page />);
-//   const buttonEl = await screen.findByRole("button", { name: /search/i });
-//   const inputEl = await screen.findByPlaceholderText(/enter username/i);
+  const userEvn = userEvent.setup();
+  render(
+    <>
+      <AlertDialog />
+      <Page />
+    </>
+  );
+  const buttonEl = await screen.findByRole("button", { name: /search/i });
+  const inputEl = await screen.findByPlaceholderText(/enter username/i);
 
-//   userEvn.clear(inputEl);
-//   await userEvn.type(inputEl, "roofi");
-//   userEvn.click(buttonEl);
+  userEvn.clear(inputEl);
+  await userEvn.type(inputEl, "roofi");
+  userEvn.click(buttonEl);
 
-//   const accordionExpandIcon = await screen.findAllByTestId("ExpandMoreIcon");
-//   await userEvent.click(accordionExpandIcon[0]);
-// });
+  const accordionExpandIcon = await screen.findAllByTestId("ExpandMoreIcon");
+  await userEvent.click(accordionExpandIcon[0]);
+
+  const modal = within(await screen.findByRole("dialog"));
+  expect(modal.getByText(/error/i)).toBeInTheDocument;
+});

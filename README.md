@@ -1,44 +1,42 @@
-# Next.js + Jest
+# Github Repo Explorer
 
-This example shows how to configure Jest to work with Next.js.
+This project searches GitHub usernames and explores their respective repositories.
 
-This includes Next.js' built-in support for Global CSS, CSS Modules and TypeScript. This example also shows how to use Jest with the App Router and React Server Components.
+# Tech stack
 
-> **Note:** Since tests can be co-located alongside other files inside the App Router, we have placed those tests in `app/` to demonstrate this behavior (which is different than `pages/`). You can still place all tests in `__tests__` if you prefer.
+Typescript
+ReactJS (NextJS)
+Jest
+Material UI
+Redux-Saga
+Docker
+Styled Components
 
-## Deploy your own
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-jest&project-name=with-jest&repository-name=with-jest)
-
-## How to Use
-
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init), [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/), or [pnpm](https://pnpm.io) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-jest with-jest-app
-```
+## Install project
 
 ```bash
-yarn create next-app --example with-jest with-jest-app
+npm install
 ```
+
+## Running project
 
 ```bash
-pnpm create next-app --example with-jest with-jest-app
+npm run dev
 ```
 
-## Running Tests
+## Build and start project
+
+```bash
+npm run build && npm run start
+```
+
+## Running Test
 
 ```bash
 npm test
 ```
 
-```bash
-yarn test
-```
+## Live Demo
 
-```bash
-pnpm test
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
-# github-repo-explorer-test
+Deployed on my personal domain
+[`github repo explorer`](https://github-explorer.roofiahmad.site/)

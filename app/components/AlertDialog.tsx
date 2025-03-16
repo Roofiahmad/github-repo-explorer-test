@@ -27,20 +27,18 @@ export default function AlertDialog() {
   };
 
   return (
-    <>
-      <Dialog color="error" open={isError} onClose={handleClose}>
-        <DialogTitle>Error {errorCode}</DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            {errorMessage}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button color="error" onClick={handleClose}>
-            Close
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </>
+    <Dialog color="error" open={isError} onClose={handleClose}>
+      <DialogTitle>Error {errorCode}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          {errorMessage}
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button color="error" onClick={handleClose}>
+          Close
+        </Button>
+      </DialogActions>
+    </Dialog>
   );
 }
